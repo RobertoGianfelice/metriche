@@ -4,7 +4,6 @@ b=1
 c=1
 
 def rime(a,b,c,metrica):
-
   l=len(metrica)
   if len(metrica)==5:
     print("metrica=",metrica)
