@@ -7,6 +7,8 @@ def metriche(lettere,n,m,metrica):
 # m: numero delle rime sa utilizzare (n<=m)
 # metrica: metrica corrente in costruzione
   global totale
+  global fileOut
+   
   l=len(metrica)
   completo=True
   # Verifico se tutte le rime sono stae usate almeno una volta
@@ -16,7 +18,12 @@ def metriche(lettere,n,m,metrica):
   if l==n and completo:
     # la metrica calcolata ha la lunghezza richiesta e utilizza tutte le rime
     totale+=1
-    print("metrica[",totale,"]=",metrica)
+    stringa="metrica["+str(totale)+"]="+ metrica
+    if outputFile=="s":
+      fileOut.write(stringa)
+      fileOut.write("\n")
+    else:
+      print(stringa)
   else:
     #  appendo alla metrica corrente tutte le possibili prosecuzioni e richiamo metriche per ognuna di esse se:
     #  * la lunghezza della metrica non raggiunge n
@@ -36,8 +43,19 @@ m=n+1
 while (m>n or m<1):
   m=int(input("Inserisci il numero di rime: "))
 
+#Richiede la scrittura opzionale su file
+outputFile="-"
+while outputFile!="s" and outputFile!="n":
+  outputFile=input("Vuoi scrivere l'output su file? [s/n]")
+  if outputFile=="s":
+    nomeFile=input("Inserisci il nome del file: ")
+    fileOut=open(nomeFile,"w")
+  
 lettere=[]
 #Inizializza lettere con i contatori delle rime usate: inizialmente tutto a zero
 for i in range(m):
   lettere.append(0)
 metriche(lettere,n,m,"")
+print (totale)
+if outputFile=="s":
+  fileOut.close()
