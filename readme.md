@@ -3,3 +3,4 @@ Programma per la generazione di metriche universali
 
 * aggiornamento con Genera tutte le metriche n,3
 * aggiornamento: genera tutte le possibile metriche n,m
+* aggirnamento: inserimento commenti
