@@ -31,7 +31,7 @@ def metriche(lettere,n,m,metrica):
     #  * la lunghezza della metrica è >= della i-esima rima (la rima b si puà usare solo dalla seconda posizione, la c dalla terza e così via
     #  * la rima precedente è stata già usata almeno una volta nella metrica (non posso usare c se non ho mai usato b)
     for i in range(m):
-      if l<=n and lettere[i]<=n-m+1 and l>=i and (i==0 or lettere[i-1]>0):
+      if l<n and lettere[i]<=n-m+1 and l>=i and (i==0 or lettere[i-1]>0):
         lettere2=lettere[:]
         lettere2[i]+=1
         # richiamo metriche aggiungendo alla metrica attuale la rima corrispondente a i
@@ -40,22 +40,37 @@ def metriche(lettere,n,m,metrica):
 #Main
 n=int(input("Inserisci la lunghezza della sequenza: "))
 m=n+1
-while (m>n or m<1):
-  m=int(input("Inserisci il numero di rime: "))
+while (m>n or m<0):
+  m=int(input("Inserisci il numero di rime [0 per generarle tutte su file]: "))
 
-#Richiede la scrittura opzionale su file
-outputFile="-"
-while outputFile!="s" and outputFile!="n":
-  outputFile=input("Vuoi scrivere l'output su file? [s/n]")
-  if outputFile=="s":
-    nomeFile=input("Inserisci il nome del file: ")
-    fileOut=open(nomeFile,"w")
+
   
-lettere=[]
-#Inizializza lettere con i contatori delle rime usate: inizialmente tutto a zero
-for i in range(m):
-  lettere.append(0)
-metriche(lettere,n,m,"")
-print (totale)
-if outputFile=="s":
-  fileOut.close()
+if m>0:
+  #Richiede la scrittura opzionale su file
+  outputFile="-"
+  while outputFile!="s" and outputFile!="n":
+    outputFile=input("Vuoi scrivere l'output su file? [s/n]")
+    if outputFile=="s":
+      nomeFile=input("Inserisci il nome del file: ")
+      fileOut=open(nomeFile,"w")
+  lettere=[]
+  #Inizializza lettere con i contatori delle rime usate: inizialmente tutto a zero
+  for i in range(m):
+    lettere.append(0)
+  metriche(lettere,n,m,"")
+  print (totale)
+  if outputFile=="s":
+    fileOut.close()
+else:
+  outputFile="s"
+  for j in range(1,n+1):
+    print(j)
+    nomeFile="./Output/out"+str(n)+"_"+str(j)+".txt"
+    fileOut=open(nomeFile,"w")
+    lettere=[]
+    totale=0
+    for i in range(j):
+      lettere.append(0)
+    metriche(lettere,n,j,"")
+    fileOut.close()
+  print(totale)
